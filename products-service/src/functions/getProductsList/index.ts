@@ -8,12 +8,6 @@ export default {
         method: 'get',
         path: 'products',
         cors: true,
-        request: {
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Credentials': true,
-          },
-        },
       },
     },
   ],

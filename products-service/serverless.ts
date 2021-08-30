@@ -2,6 +2,7 @@ import type { AWS } from '@serverless/typescript';
 
 import getProductsList from '@functions/getProductsList';
 import getProductById from '@functions/getProductById';
+import openapi from './src/documentation/openapi';
 
 const serverlessConfiguration: AWS = {
   service: 'products-service',
@@ -11,8 +12,9 @@ const serverlessConfiguration: AWS = {
       webpackConfig: './webpack.config.js',
       includeModules: true,
     },
+    documentation: openapi,
   },
-  plugins: ['serverless-webpack', 'serverless-offline', 'serverless-aws-documentation', 'serverless-swagger-api'],
+  plugins: ['serverless-webpack', 'serverless-offline', 'serverless-aws-documentation'],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
