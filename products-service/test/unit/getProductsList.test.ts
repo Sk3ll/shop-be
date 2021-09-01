@@ -1,11 +1,10 @@
-// import { getProductsList } from '@functions/getProductsList/handler';
-// import HttpStatusCode from '@utils/constants/HttpStatusCode';
-// import { APIGatewayProxyEvent } from 'aws-lambda';
+import * as getProductsList from '@functions/getProductsList/handler';
 
-test('correct greeting is generated', async () => {
-  // const event: any = {};
-  // const result: any = await getProductsList(event, event, event);
-  const l = true;
-
-  expect(l).toEqual(true);
+describe('Functionality getProductsList', () => {
+  test('should  return HTTP code 200 when get products data', async () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const { statusCode } = await getProductsList.main({});
+    expect(statusCode).toEqual(200);
+  });
 });
