@@ -6,15 +6,16 @@ import { middyfy } from '@libs/lambda';
 import { ProductSchema } from '@schemas';
 import { HttpStatusCode } from '@utils/constants';
 import errorHandler from '@utils/errorHandler';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import products from '../productsMock.json';
+import { Product } from '../../models';
+import getProductsService from '../../services/getProducts';
 
 const getProductsList: ValidatedEventAPIGatewayProxyEvent<typeof ProductSchema> = async () => {
   try {
+    const data: Product[] = await getProductsService();
+
     return formatJSONResponse({
       status: HttpStatusCode.OK,
-      data: products,
+      data,
     });
   } catch (e) {
     return errorHandler(e);

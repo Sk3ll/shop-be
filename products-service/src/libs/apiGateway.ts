@@ -5,7 +5,7 @@ type ValidatedAPIGatewayProxyEvent<S> = Omit<APIGatewayProxyEvent, 'body'> & { b
 export type ValidatedEventAPIGatewayProxyEvent<S> = Handler<ValidatedAPIGatewayProxyEvent<S>, APIGatewayProxyResult>;
 
 export interface Response {
-  headers: unknown;
+  headers: any;
   statusCode: number;
   body: string;
 }

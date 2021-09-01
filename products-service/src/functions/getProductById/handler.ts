@@ -6,15 +6,13 @@ import { middyfy } from '@libs/lambda';
 import { NotFoundError } from '@utils/errors';
 import { ProductSchema } from '@schemas';
 import errorHandler from '@utils/errorHandler';
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import products from '../productsMock.json';
+import getProductService from '../../services/getProductById';
+import { Product } from '../../models';
 
 const getProductById: ValidatedEventAPIGatewayProxyEvent<typeof ProductSchema> = async event => {
   try {
     const { id } = event.pathParameters;
-    const data = products.find(product => product.id === id);
+    const data: Product = await getProductService(id);
 
     if (!data) {
       throw new NotFoundError();
