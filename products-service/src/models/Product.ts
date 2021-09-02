@@ -1,8 +1,17 @@
-interface Product {
-  count: number;
-  description: string;
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+
+@Entity()
+class Product {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column()
+  description: string;
+
+  @Column()
   price: number;
+
+  @Column()
   title: string;
 }
 

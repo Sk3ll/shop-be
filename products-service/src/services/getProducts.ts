@@ -1,6 +1,11 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import products from '../../services/productsMock.json';
 import { Product } from '../models';
+import createConnection from '../config/database';
 
-export default async (): Promise<Product[]> => Promise.resolve(products);
+export default async (): Promise<Product[]> => {
+  const connection = await createConnection();
+  const productRepository = connection.getRepository(Product);
+  const data = await productRepository.find();
+
+  await connection.close();
+  return data;
+};
