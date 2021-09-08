@@ -4,22 +4,21 @@ import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
 import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
 import { ProductSchema } from '@schemas';
-import { HttpStatusCode } from '@utils/constants';
 import errorHandler from '@utils/errorHandler';
+import { HttpStatusCode } from '@utils/constants';
+import createProductService from '../../services/createProduct';
 import { Product } from '../../entity';
-import getProductsService from '../../services/getProducts';
 
-const getProductsList: ValidatedEventAPIGatewayProxyEvent<typeof ProductSchema> = async () => {
+const createProduct: ValidatedEventAPIGatewayProxyEvent<typeof ProductSchema> = async event => {
   try {
-    const data: Product[] = await getProductsService();
+    await createProductService(event.body as Product);
 
     return formatJSONResponse({
       status: HttpStatusCode.OK,
-      data,
     });
   } catch (e) {
     return errorHandler(e);
   }
 };
 
-export const main = middyfy(getProductsList);
+export const main = middyfy(createProduct);

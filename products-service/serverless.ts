@@ -1,8 +1,14 @@
 import type { AWS } from '@serverless/typescript';
+// import dotenv from 'dotenv';
 
 import getProductsList from '@functions/getProductsList';
 import getProductById from '@functions/getProductById';
+import createProduct from '@functions/createProduct';
 import openapi from './src/documentation/openapi';
+
+// dotenv.config();
+//
+// const { HOST_DB, PORT_DB, USER_DB, PASS_DB, NAME_DB } = process.env;
 
 const serverlessConfiguration: AWS = {
   service: 'products-service',
@@ -25,6 +31,11 @@ const serverlessConfiguration: AWS = {
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
+      HOST_DB: 'storedb.cmjbog3ffgsm.eu-west-1.rds.amazonaws.com',
+      PORT_DB: '5432',
+      USER_DB: 'postgres',
+      PASS_DB: 'password',
+      NAME_DB: 'storedb',
     },
     lambdaHashingVersion: '20201221',
     httpApi: {
@@ -35,6 +46,7 @@ const serverlessConfiguration: AWS = {
   functions: {
     getProductsList,
     getProductById,
+    createProduct,
   },
 };
 
