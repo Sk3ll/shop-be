@@ -1,3 +1,4 @@
+import NotFoundError from '@utils/errors/NotFoundError';
 import { Product } from '../entity';
 import createConnection from '../config/database';
 
@@ -9,5 +10,10 @@ export default async (id: string): Promise<Product> => {
   );
 
   await connection.close();
+
+  if (!data[0]) {
+    throw new NotFoundError();
+  }
+
   return data[0];
 };

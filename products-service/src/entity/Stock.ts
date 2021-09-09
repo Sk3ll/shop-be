@@ -1,8 +1,8 @@
-import { Entity, Column, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, JoinColumn, OneToOne, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 import Product from './Product';
 
 @Entity('stocks')
-class Stock {
+class Stock extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
