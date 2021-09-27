@@ -1,9 +1,19 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import products from '../../services/productsMock.json';
-import { Product } from '../models';
+import NotFoundError from '@utils/errors/NotFoundError';
+import { Product } from '../entity';
+import createConnection from '../config/database';
 
 export default async (id: string): Promise<Product> => {
-  const product = products.find(item => item.id === id);
-  return Promise.resolve(product);
+  const connection = await createConnection();
+  const productRepository = connection.getRepository(Product);
+  const data = await productRepository.query(
+    `select p.id, p.title, p.price, s.count, p.description from products as p join stocks s on p.id = s.productid where p.id = '${id}';`
+  );
+
+  await connection.close();
+
+  if (!data[0]) {
+    throw new NotFoundError();
+  }
+
+  return data[0];
 };
